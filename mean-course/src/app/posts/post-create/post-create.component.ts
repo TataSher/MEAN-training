@@ -26,7 +26,7 @@ export class PostCreateComponent implements OnInit {
             console.log(paramMap)
             if (paramMap.has('postId')) {
                 this.mode = 'edit';
-                this.postId = paramMap.get('postId');
+                this.postId = paramMap.get('postId')!;
                 this.post = this.postsService.getPost(this.postId);
             } else {
                 this.mode = 'create';
@@ -35,11 +35,16 @@ export class PostCreateComponent implements OnInit {
         })
     }
 
-    onAddPost(form: NgForm) {
+    onSavePost(form: NgForm) {
         if (form.invalid) {
             return
         }
-        this.postsService.addPost(form.value.title, form.value.content)
+        if (this.mode === 'create') {
+            this.postsService.addPost(form.value.title, form.value.content)
+        } else {
+            this.postsService.updatePost(this.postId, form.value.title, form.value.content)
+        }
+
         form.resetForm();
     }
 
