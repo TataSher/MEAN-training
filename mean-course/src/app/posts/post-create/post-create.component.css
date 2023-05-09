@@ -7,3 +7,7 @@ button {
     margin:10px;
     width: 130px;
 }
+
+mat-spinner {
+  margin: auto;
+}
